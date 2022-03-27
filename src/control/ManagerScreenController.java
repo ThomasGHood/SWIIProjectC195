@@ -8,10 +8,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.Main;
 import model.Customer;
-import utilities.Managers;
+import utilities.CustomerQuery;
+import utilities.ListManager;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -20,11 +22,7 @@ public class ManagerScreenController implements Initializable {
     private Customer selectedCustomer; //will need this.
 
     @FXML
-    private Button removeCustomerButton;
-    @FXML
-    private Button saveButton;
-    @FXML
-    private Button cancelButton;
+    private Button backButton;
     @FXML
     private TableView<Customer> customerTableView;
     @FXML
@@ -43,6 +41,7 @@ public class ManagerScreenController implements Initializable {
     private TableColumn<Customer, Integer> customerDivisionCol;
 
 
+
     @FXML
     public void onActionOpenAddCustomerScreen(ActionEvent actionEvent) throws IOException {
 
@@ -59,12 +58,18 @@ public class ManagerScreenController implements Initializable {
 
     @FXML
     public void onActionDeleteSelectedCustomer(ActionEvent actionEvent) {
+        //TODO need to add functionality to block deletion of customer if the customer has appointments
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete selected customer?");
 
         Optional<ButtonType> result = alert.showAndWait();
 
         if(result.isPresent() && result.get() == ButtonType.OK){
-            Managers.deleteCustomer(customerTableView.getSelectionModel().getSelectedItem());
+            try {
+                CustomerQuery.delete(customerTableView.getSelectionModel().getSelectedItem().getCustomerID());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            ListManager.deleteCustomer(customerTableView.getSelectionModel().getSelectedItem());
         }
 
     }
@@ -88,18 +93,10 @@ public class ManagerScreenController implements Initializable {
         //TODO
     }
 
-    @FXML
-    public void onActionSaveChangesCloseScreen(ActionEvent actionEvent){
-        //TODO add save function and confirmation prompt
-        Stage stage = (Stage) saveButton.getScene().getWindow();
-        stage.close();
-
-    }
 
     @FXML
     public void onActionCloseScreen(ActionEvent actionEvent){
-        //TODO add warning prompt
-        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        Stage stage = (Stage) backButton.getScene().getWindow();
         stage.close();
     }
 
@@ -114,7 +111,7 @@ public class ManagerScreenController implements Initializable {
         customerCountryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
         customerDivisionCol.setCellValueFactory(new PropertyValueFactory<>("divisionID"));
 
-        customerTableView.setItems(Managers.getAllCustomers());
+        customerTableView.setItems(ListManager.getAllCustomers());
 
     }
 

@@ -16,16 +16,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Customer;
-import model.User;
+import utilities.CustomerQuery;
 import utilities.JDBC;
-import utilities.Managers;
+import utilities.ListManager;
 
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-
-import static utilities.JDBC.connection;
 
 public class Main  extends Application {
 
@@ -42,33 +38,33 @@ public class Main  extends Application {
 
         //Test:
 
-        User tempTestUser = new User(666, "thood", "test9456");
-        Customer tempTestCustomer = new Customer(777, "Bob Dole", "Last star on the left of the lone star", "88041-1231", "777-7771", "USA", 13);
+        Customer tempTestCustomer = new Customer(777, "Bob Dole",
+                "Last star on the left of the lone star", "88041-1231", "777-7771",
+                "USA", 13);
 
-        Managers.addCustomer(tempTestCustomer);
+        ListManager.addCustomer(tempTestCustomer);
 
         //End test
 
         JDBC.openConnection();
+
         //Another Test:
-        Statement statement = connection.createStatement();
-        ResultSet customerSet = statement.executeQuery("SELECT * FROM customers");
-        while (customerSet.next()){
 
-            System.out.println(customerSet.getString("Customer_Name"));
+        //DBQuery.insert("Barbra Dole", "Wouldn't wanna go there", "666", "999-1984", 69);
+        //CustomerQuery.delete(6);
 
-            int customerId = customerSet.getInt("Customer_ID");
-            String customerName = customerSet.getString("Customer_Name");
-            String address = customerSet.getString("Address");
-            String postalCode = customerSet.getString("Postal_Code");
-            String phone = customerSet.getString("Phone");
-            int divisionId = customerSet.getInt("Division_ID");
-            String country = "USA";
+        //End Test
 
-            Managers.addCustomer(new Customer(customerId, customerName, address, postalCode, phone, country, divisionId));
+        //This populates the Customers TableView with current DB records at application start.
 
-        }
+        CustomerQuery.select();
+        CustomerQuery.selectCountry();
+        CustomerQuery.selectDivision();
+
         //End test
+
+
+
         launch(args);
 
     }

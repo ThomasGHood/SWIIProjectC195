@@ -3,14 +3,16 @@ package control;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
-import model.Customer;
-import utilities.Managers;
+import model.Country;
+import model.Divisions;
+import utilities.CustomerQuery;
+import utilities.ListManager;
 
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddCustomerScreenController implements Initializable {
@@ -28,33 +30,65 @@ public class AddCustomerScreenController implements Initializable {
     @FXML
     private TextField phoneText;
     @FXML
-    private ComboBox<Customer> countryComboBox;
+    private ComboBox<Country> countryComboBox;
     @FXML
-    private ComboBox<Customer> divisionComboBox;
+    private ComboBox<Divisions> divisionComboBox;
 
     @FXML
     public void onActionSaveChanges(ActionEvent actionEvent){
-        //TODO change ID collection, and ComboBox functionality
-        int customerId = Managers.getCustomerID();
+        //TODO add ComboBox functionality
         String customerName = customerNameText.getText();
         String address = customerAddressText.getText();
         String postalCode = postalCodeText.getText();
         String phone = phoneText.getText();
+        //Divisions divisionId = divisionComboBox.getValue();
 
-        Managers.addCustomer(new Customer(customerId, customerName, address, postalCode, phone, "USA", 13));
+//        try {
+//            CustomerQuery.insert(customerName, address, postalCode, phone, divisionId);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+
+        System.out.println(divisionComboBox.getValue());
+
+        try{
+            CustomerQuery.selectLast();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        stage.close();
+
     }
+
 
     @FXML
     public void onActionCloseScreen(ActionEvent actionEvent){
 
-        Stage stage = (Stage) backButton.getScene().getWindow();
-        stage.close();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Discard changes?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if(result.isPresent() && result.get() == ButtonType.OK){
+            Stage stage = (Stage) backButton.getScene().getWindow();
+            stage.close();
+        }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        customerIdText.setText("Auto Gen- Disabled");
+        customerIdText.setText("Auto-Gen on Creation");
+
+
+        countryComboBox.setItems(ListManager.getAllCountries());
+        countryComboBox.setPromptText("Select Country");
+        divisionComboBox.setItems(ListManager.getAllDivisions());
+        divisionComboBox.setPromptText("Select Division");
+
+
 
     }
 }

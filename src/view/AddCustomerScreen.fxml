@@ -22,7 +22,7 @@
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="150.0">
                      <children>
-                        <TextField fx:id="customerIdText" editable="false" />
+                        <TextField fx:id="customerIdText" editable="false" opacity="0.5" />
                      </children>
                   </VBox>
                </children>
