@@ -20,6 +20,8 @@ public class AddCustomerScreenController implements Initializable {
     @FXML
     private Button backButton;
     @FXML
+    private Button saveButton;
+    @FXML
     private TextField customerIdText;
     @FXML
     private TextField customerNameText;
@@ -36,20 +38,18 @@ public class AddCustomerScreenController implements Initializable {
 
     @FXML
     public void onActionSaveChanges(ActionEvent actionEvent){
-        //TODO add ComboBox functionality
         String customerName = customerNameText.getText();
         String address = customerAddressText.getText();
         String postalCode = postalCodeText.getText();
         String phone = phoneText.getText();
-        //Divisions divisionId = divisionComboBox.getValue();
+        Divisions selectedDivision = divisionComboBox.getValue();
+        int divisionId = selectedDivision.getDivisionId();
 
-//        try {
-//            CustomerQuery.insert(customerName, address, postalCode, phone, divisionId);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-
-        System.out.println(divisionComboBox.getValue());
+        try {
+            CustomerQuery.insert(customerName, address, postalCode, phone, divisionId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         try{
             CustomerQuery.selectLast();
@@ -58,7 +58,7 @@ public class AddCustomerScreenController implements Initializable {
         }
 
 
-        Stage stage = (Stage) backButton.getScene().getWindow();
+        Stage stage = (Stage) saveButton.getScene().getWindow();
         stage.close();
 
     }
@@ -67,7 +67,7 @@ public class AddCustomerScreenController implements Initializable {
     @FXML
     public void onActionCloseScreen(ActionEvent actionEvent){
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Discard changes?");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Changes will not be saved.");
 
         Optional<ButtonType> result = alert.showAndWait();
 
@@ -77,17 +77,39 @@ public class AddCustomerScreenController implements Initializable {
         }
     }
 
+    // Minor improvement would be to make it so that when the country is changed, it returns the divsion combobox
+    // back to "Select Divsion"..
+    @FXML
+    public void setDivisionComboBox(ActionEvent actionEvent){
+
+        //small bug that causes division prompt to go blank if the country is changed
+
+        String selectCountry = (String) countryComboBox.getSelectionModel().getSelectedItem().getCountryName();
+
+        switch(selectCountry){
+            case "U.S":
+                divisionComboBox.setItems(ListManager.getAllDivisionsUS());
+                divisionComboBox.setPromptText("Select Division");
+                break;
+            case "UK":
+                divisionComboBox.setItems(ListManager.getAllDivisionsUK());
+                divisionComboBox.setPromptText("Select Division");
+                break;
+            case "Canada":
+                divisionComboBox.setItems(ListManager.getAllDivisionsCanada());
+                divisionComboBox.setPromptText("Select Division");
+                break;
+        }
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         customerIdText.setText("Auto-Gen on Creation");
 
-
         countryComboBox.setItems(ListManager.getAllCountries());
         countryComboBox.setPromptText("Select Country");
-        divisionComboBox.setItems(ListManager.getAllDivisions());
-        divisionComboBox.setPromptText("Select Division");
-
 
 
     }

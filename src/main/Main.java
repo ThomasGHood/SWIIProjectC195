@@ -15,10 +15,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.Customer;
-import utilities.CustomerQuery;
-import utilities.JDBC;
-import utilities.ListManager;
+import model.User;
+import utilities.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -38,11 +36,17 @@ public class Main  extends Application {
 
         //Test:
 
-        Customer tempTestCustomer = new Customer(777, "Bob Dole",
-                "Last star on the left of the lone star", "88041-1231", "777-7771",
-                "USA", 13);
+        User thood = new User(666, "thood", "admin0ne");
 
-        ListManager.addCustomer(tempTestCustomer);
+        ListManager.addUser(thood);
+
+//        Customer tempTestCustomer = new Customer(777, "Bob Dole",
+//                "Last star on the left of the lone star", "88041-1231", "777-7771",
+//                "U.S", 13);
+//
+//        ListManager.addCustomer(tempTestCustomer);
+
+
 
         //End test
 
@@ -57,22 +61,64 @@ public class Main  extends Application {
 
         //This populates the Customers TableView with current DB records at application start.
 
+//        CustomerQuery.insert("Bob Dole",
+//                "Last star on the left of the lone star", "88041-1231", "777-7771",
+//                13);
+//        AppointmentQuery.insert("Test", "Test", "Test", "Test", LocalDateTime.now().plusDays(3),
+//                LocalDateTime.now().plusDays(3).plusMinutes(45), 42, 1, 1);
+//        AppointmentQuery.insert("Test", "Test", "Test", "Test", LocalDateTime.now().plusDays(3),
+//                LocalDateTime.now().plusDays(3).plusMinutes(45), 42, 1, 1);
+//        AppointmentQuery.insert("Test", "Test", "Test", "Test", LocalDateTime.now().plusDays(3),
+//                LocalDateTime.now().plusDays(3).plusMinutes(45), 42, 1, 1);
+//        AppointmentQuery.insert("Test", "Test", "Test", "Test", LocalDateTime.now().plusDays(3),
+//                LocalDateTime.now().plusDays(3).plusMinutes(45), 42, 1, 1);
+
         CustomerQuery.select();
         CustomerQuery.selectCountry();
-        CustomerQuery.selectDivision();
+        CustomerQuery.selectDivisionUS();
+        CustomerQuery.selectDivisionCanada();
+        CustomerQuery.selectDivisionUK();
+        CustomerQuery.selectAllDivisions();
+        UserQuery.select();
+        ContactsQuery.select();
+        AppointmentQuery.select();
+        AppointmentQuery.selectWeek();
+        AppointmentQuery.selectMonth();
+
+        ListManager.setAllMinutes();
+        ListManager.setAllStartHours();
+        ListManager.setAllEndHours();
 
         //End test
 
+        //TODO French test:
+        //Locale.setDefault(new Locale("fr"));
 
 
         launch(args);
 
     }
 
-    public static void navigateMenu(ActionEvent event, String navMenu) throws IOException {
+    public static void navigateMenu(ActionEvent event, String navMenu, String stageName) throws IOException {
         Parent root = FXMLLoader.load(Main.class.getResource(navMenu));
         Stage stage = new Stage();
+        stage.setTitle(stageName);
         stage.setScene(new Scene(root));
-        stage.showAndWait();
+        stage.show();
+    }
+
+    //TODO this refreshes the lists for the main screen's tableview
+    public static void refreshQuery() throws SQLException {
+        ListManager.getAllMonthReport().removeAll(ListManager.getAllMonthReport());
+        AppointmentQuery.selectMonth();
+
+        ListManager.getAllWeekReport().removeAll(ListManager.getAllWeekReport());
+        AppointmentQuery.selectWeek();
+
+        ListManager.getAppointmentType().removeAll(ListManager.getAppointmentType());
+        ReportsQuery.selectType();
+
+        ListManager.getAllContacts().removeAll(ListManager.getAllContacts());
+        ContactsQuery.select();
     }
 }

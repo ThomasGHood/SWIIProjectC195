@@ -7,19 +7,27 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.Main;
+import model.Appointment;
 import model.Customer;
+import utilities.AppointmentQuery;
 import utilities.CustomerQuery;
 import utilities.ListManager;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+//TODO *display "Cancelled" for removed appointment
+//TODO *customer with appointment can't be deleted until the appointment the customer is involved with has been cancelled.
+//TODO improve appearance.
+
 public class ManagerScreenController implements Initializable {
 
-    private Customer selectedCustomer; //will need this.
+    private Customer selectedCustomer;
+    private Appointment selectedAppointment; // this will be needed
 
     @FXML
     private Button backButton;
@@ -39,37 +47,99 @@ public class ManagerScreenController implements Initializable {
     private TableColumn<Customer, String> customerCountryCol;
     @FXML
     private TableColumn<Customer, Integer> customerDivisionCol;
-
+    @FXML
+    private TableView<Appointment> appointmentsTableView;
+    @FXML
+    private TableColumn<Appointment, Integer> appointmentsAppointmentIdCol;
+    @FXML
+    private TableColumn<Appointment, Integer> appointmentsCustomerIdCol;
+    @FXML
+    private TableColumn<Appointment, Integer> appointmentsUserIdCol;
+    @FXML
+    private TableColumn<Appointment, String> appointmentsTitleCol;
+    @FXML
+    private TableColumn<Appointment, String> appointmentsDescriptionCol;
+    @FXML
+    private TableColumn<Appointment, String> appointmentsLocationCol;
+    @FXML
+    private TableColumn<Appointment, Integer> appointmentsContactCol;
+    @FXML
+    private TableColumn<Appointment, String> appointmentsTypeCol;
+    @FXML
+    private TableColumn<Appointment, Time> appointmentsStartTimeCol;
+    @FXML
+    private TableColumn<Appointment, Time> appointmentsEndTimeCol;
 
 
     @FXML
     public void onActionOpenAddCustomerScreen(ActionEvent actionEvent) throws IOException {
 
-        Main.navigateMenu(actionEvent, "/view/AddCustomerScreen.fxml");
+        Main.navigateMenu(actionEvent, "/view/AddCustomerScreen.fxml", "Customer Adder");
 
     }
 
     @FXML
     public void onActionOpenEditCustomerScreen(ActionEvent actionEvent) throws IOException {
 
-        Main.navigateMenu(actionEvent, "/view/EditCustomerScreen.fxml");
+        selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
+
+        if (selectedCustomer != null){
+            EditCustomerScreenController.getSelectedCustomer(customerTableView.getSelectionModel().getSelectedItem());
+
+            Main.navigateMenu(actionEvent, "/view/EditCustomerScreen.fxml", "Customer Editor");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "No customer selected!");
+
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if(result.isPresent() && (result.get() == ButtonType.OK)) {
+                // do nothing
+            }
+        }
+        customerTableView.refresh();
 
     }
 
     @FXML
     public void onActionDeleteSelectedCustomer(ActionEvent actionEvent) {
         //TODO need to add functionality to block deletion of customer if the customer has appointments
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete selected customer?");
+        String deletedName = customerTableView.getSelectionModel().getSelectedItem().getCustomerName();
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete selected customer and all associated appointments?");
 
         Optional<ButtonType> result = alert.showAndWait();
 
-        if(result.isPresent() && result.get() == ButtonType.OK){
+        if(result.isPresent() && result.get() == ButtonType.OK) {
+            ListManager.getALLCustomerAppointments().removeAll(ListManager.getALLCustomerAppointments());
+
             try {
                 CustomerQuery.delete(customerTableView.getSelectionModel().getSelectedItem().getCustomerID());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            try {
+                AppointmentQuery.select();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            appointmentsTableView.setItems(ListManager.getALLCustomerAppointments());
+
             ListManager.deleteCustomer(customerTableView.getSelectionModel().getSelectedItem());
+
+        }
+
+        Alert alert2 = new Alert(Alert.AlertType.INFORMATION, "Customer, " + deletedName + " has been deleted!");
+
+        Optional<ButtonType> result2 = alert2.showAndWait();
+
+        if(result2.isPresent() && result2.get() == ButtonType.OK){
+
+        }
+
+        try {
+            Main.refreshQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
     }
@@ -77,20 +147,65 @@ public class ManagerScreenController implements Initializable {
     @FXML
     public void onActionOpenAddAppointmentScreen(ActionEvent actionEvent) throws IOException {
 
-        Main.navigateMenu(actionEvent, "/view/AddAppointmentScreen.fxml");
+        Main.navigateMenu(actionEvent, "/view/AddAppointmentScreen.fxml", "Appointment Adder");
 
     }
 
     @FXML
     public void onActionOpenEditAppointmentScreen(ActionEvent actionEvent) throws IOException {
 
-        Main.navigateMenu(actionEvent, "/view/EditAppointmentScreen.fxml");
+        //Main.navigateMenu(actionEvent, "/view/EditAppointmentScreen.fxml", "Appointment Editor");
+
+        selectedAppointment = appointmentsTableView.getSelectionModel().getSelectedItem();
+
+        if (selectedAppointment != null){
+            EditAppointmentScreenController.getSelectedAppointment(appointmentsTableView.getSelectionModel().getSelectedItem());
+
+            Main.navigateMenu(actionEvent, "/view/EditAppointmentScreen.fxml", "Appointment Editor");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "No appointment selected!");
+
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if(result.isPresent() && (result.get() == ButtonType.OK)) {
+                // do nothing
+            }
+        }
+        try {
+            Main.refreshQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
     @FXML
     public void onActionDeleteSelectedAppointment(ActionEvent actionEvent) {
-        //TODO
+
+        int apptId = appointmentsTableView.getSelectionModel().getSelectedItem().getAppointmentID();
+        String apptType = appointmentsTableView.getSelectionModel().getSelectedItem().getType();
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete selected appointment?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if(result.isPresent() && result.get() == ButtonType.OK){
+            try {
+                AppointmentQuery.delete(appointmentsTableView.getSelectionModel().getSelectedItem().getAppointmentID());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            ListManager.deleteCustomerAppointment(appointmentsTableView.getSelectionModel().getSelectedItem());
+            Alert note = new Alert(Alert.AlertType.INFORMATION, "Appointment ID " + apptId + " of type " + apptType +
+                    " has been removed!");
+            note.showAndWait();
+        }
+        try {
+            Main.refreshQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -112,6 +227,19 @@ public class ManagerScreenController implements Initializable {
         customerDivisionCol.setCellValueFactory(new PropertyValueFactory<>("divisionID"));
 
         customerTableView.setItems(ListManager.getAllCustomers());
+
+        appointmentsAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
+        appointmentsCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        appointmentsUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
+        appointmentsTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        appointmentsDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        appointmentsLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        appointmentsContactCol.setCellValueFactory(new PropertyValueFactory<>("contactID"));
+        appointmentsTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        appointmentsStartTimeCol.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        appointmentsEndTimeCol.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+
+        appointmentsTableView.setItems(ListManager.getALLCustomerAppointments());
 
     }
 

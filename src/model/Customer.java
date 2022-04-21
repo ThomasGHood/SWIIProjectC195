@@ -77,4 +77,9 @@ public class Customer {
         this.divisionID = divisionID;
     }
 
+    @Override
+    public String toString(){
+        return (getCustomerID() + " | " + getCustomerName());
+    }
+
 }

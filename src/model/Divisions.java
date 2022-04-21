@@ -1,8 +1,8 @@
 package model;
 
 public class Divisions {
-    private static int divisionId;
-    private static String divisionName;
+    private int divisionId;
+    private String divisionName;
 
     public Divisions(int divisionId, String divisionName){
         this.divisionId = divisionId;
@@ -14,7 +14,7 @@ public class Divisions {
     }
 
     public void setDivisionId(int divisionId) {
-        Divisions.divisionId = divisionId;
+        this.divisionId = divisionId;
     }
 
     public String getDivisionName() {
@@ -22,12 +22,12 @@ public class Divisions {
     }
 
     public void setDivisionName(String divisionName) {
-        Divisions.divisionName = divisionName;
+        this.divisionName = divisionName;
     }
 
 
-//    @Override
-//    public String toString(){
-//        return ("ID: " + getDivisionId() + " Division: " + getDivisionName());
-//    }
+    @Override
+    public String toString(){
+        return getDivisionName();
+    }
 }

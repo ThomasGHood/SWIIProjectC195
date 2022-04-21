@@ -38,6 +38,7 @@ public abstract class CustomerQuery {
         ps.setInt(6, customerId);
         int rowsAffected = ps.executeUpdate();
         return rowsAffected;
+
     }
 
     //This method populates customer list from DB
@@ -87,8 +88,59 @@ public abstract class CustomerQuery {
         }
     }
 
+    //This method populates an observablelist with Country objects.
+    public static void selectCountry() throws SQLException {
+        String sql = "SELECT * FROM countries";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int countryId = rs.getInt("Country_ID");
+            String countryName = rs.getString("Country");
+
+            ListManager.addCountry((new Country(countryId, countryName)));
+        }
+    }
+
+
     //This method gets the Divisions observablelist.
-    public static void selectDivision() throws SQLException {
+    public static void selectDivisionUS() throws SQLException {
+        String sql = "SELECT Division_ID, Division FROM first_level_divisions\n" +
+                "WHERE Country_ID =1";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int divisionId = rs.getInt("Division_ID");
+            String divisionName = rs.getString("Division");
+
+            ListManager.addDivisionUS(new Divisions(divisionId, divisionName));
+        }
+    }
+
+    public static void selectDivisionCanada() throws SQLException {
+        String sql = "SELECT Division_ID, Division FROM first_level_divisions\n" + "WHERE Country_ID =3";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int divisionId = rs.getInt("Division_ID");
+            String divisionName = rs.getString("Division");
+
+            ListManager.addDivisionCanada(new Divisions(divisionId, divisionName));
+        }
+    }
+
+    public static void selectDivisionUK() throws SQLException {
+        String sql = "SELECT Division_ID, Division FROM first_level_divisions\n" + "WHERE Country_ID =2";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int divisionId = rs.getInt("Division_ID");
+            String divisionName = rs.getString("Division");
+
+            ListManager.addDivisionUK(new Divisions(divisionId, divisionName));
+        }
+    }
+
+    public static void selectAllDivisions() throws SQLException {
         String sql = "SELECT Division_ID, Division FROM first_level_divisions";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
@@ -99,21 +151,6 @@ public abstract class CustomerQuery {
             ListManager.addDivision(new Divisions(divisionId, divisionName));
         }
     }
-
-    //This method gets the Country observablelist.
-    public static void selectCountry() throws SQLException {
-        String sql = "SELECT * FROM countries";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            int countryId = rs.getInt("Country_ID");
-            String countryName = rs.getString("Country");
-
-            ListManager.addCountry(new Country(countryId, countryName));
-            System.out.println(countryName + " | " + countryId);
-        }
-    }
-
 
     public static int delete(int customerId) throws SQLException {
         String sql = "DELETE FROM CUSTOMERS WHERE Customer_ID = ?";

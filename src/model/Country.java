@@ -1,8 +1,8 @@
 package model;
 
 public class Country {
-    private static int countryId;
-    private static String countryName;
+    private int countryId;
+    private String countryName;
 
     public Country(int countryId, String countryName) {
         this.countryId = countryId;
@@ -14,7 +14,7 @@ public class Country {
     }
 
     public void setCountryId(int countryId) {
-        Country.countryId = countryId;
+        this.countryId = countryId;
     }
 
     public String getCountryName() {
@@ -22,11 +22,12 @@ public class Country {
     }
 
     public void setCountryName(String countryName) {
-        Country.countryName = countryName;
+        this.countryName = countryName;
     }
 
-//    @Override
-//    public String toString(){
-//        return (getCountryName());
-//    }
+    @Override
+    public String toString(){
+        return countryName;
+    }
+
 }

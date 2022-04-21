@@ -16,7 +16,7 @@
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Label text="User Name: " />
-                  <TextField>
+                  <TextField fx:id="userName">
                      <HBox.margin>
                         <Insets left="15.0" right="15.0" />
                      </HBox.margin>
@@ -29,7 +29,7 @@
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Label text="Password: " />
-                  <PasswordField>
+                  <PasswordField fx:id="password">
                      <HBox.margin>
                         <Insets left="8.0" />
                      </HBox.margin>

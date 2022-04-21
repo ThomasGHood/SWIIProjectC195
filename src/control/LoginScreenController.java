@@ -3,13 +3,10 @@ package control;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
-import utilities.JDBC;
 import main.Main;
+import utilities.JDBC;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,19 +27,29 @@ public class LoginScreenController implements Initializable {
     private Label zoneID;
     @FXML
     private Button loginButton;
+    @FXML
+    private TextField userName;
+    @FXML
+    private PasswordField password;
 
     @FXML
     public void onActionLoadMainMenu(ActionEvent actionEvent) throws IOException {
-        Alert alert = new Alert(Alert.AlertType.ERROR, "Username or Password incorrect\nContact your system administrator");
-        Optional<ButtonType> result = alert.showAndWait();
 
-        if(result.isPresent() && result.get() == ButtonType.OK){
-            Stage stage = (Stage) loginButton.getScene().getWindow();
-            stage.close();
-            Main.navigateMenu(actionEvent, "/view/MainScreen.fxml");
-        }
+        Stage stage = (Stage) loginButton.getScene().getWindow();
+                stage.close();
+                Main.navigateMenu(actionEvent, "/view/MainScreen.fxml", "Dashboard");
 
-
+        //TODO uncomment to add username/password --> must be updated to allow for username/password pairs to be correct
+//        for (User user : ListManager.getAllUsers()){
+//            if(user.getUserName().equals(userName.getText()) && user.getUserPassword().equals(password.getText())){
+//                Stage stage = (Stage) loginButton.getScene().getWindow();
+//                stage.close();
+//                Main.navigateMenu(actionEvent, "/view/MainScreen.fxml");
+//            } else {
+//                Alert alert = new Alert(Alert.AlertType.ERROR, "Username or Password incorrect\nContact your system administrator");
+//                Optional<ButtonType> result = alert.showAndWait();
+//            }
+//        }
     }
 
     @FXML
@@ -64,6 +71,9 @@ public class LoginScreenController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         zoneID.setText("USA");
+        userName.setPromptText("Username");
+        password.setPromptText("Password");
+
 
     }
 }
