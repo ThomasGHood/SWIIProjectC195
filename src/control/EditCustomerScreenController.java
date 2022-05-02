@@ -44,8 +44,6 @@ public class EditCustomerScreenController implements Initializable {
 
     @FXML
     public void onActionSaveChanges(ActionEvent actionEvent){
-        //TODO Throws Null Pointer Exception! because comboboxes are initially null.
-
 
         String customerName = customerNameText.getText();
         String address = customerAddressText.getText();
@@ -55,6 +53,32 @@ public class EditCustomerScreenController implements Initializable {
         Divisions selectedDivision = divisionsComboBox.getValue();
         int divisionId = selectedDivision.getDivisionId();
         int customerId = selectedCustomer.getCustomerID();
+
+        if (customerName.isEmpty()){
+            Alert emptyField = new Alert(Alert.AlertType.ERROR, "Invalid entry:\nCustomer Name cannot be blank.");
+            emptyField.showAndWait();
+            return;
+        }
+        if (address.isEmpty()){
+            Alert emptyField = new Alert(Alert.AlertType.ERROR, "Invalid entry:\nAddress cannot be blank");
+            emptyField.showAndWait();
+            return;
+        }
+        if (postalCode.isEmpty()){
+            Alert emptyField = new Alert(Alert.AlertType.ERROR, "Invalid entry:\nPostal Code cannot be blank");
+            emptyField.showAndWait();
+            return;
+        }
+        if (phone.isEmpty()){
+            Alert emptyField = new Alert(Alert.AlertType.ERROR, "Invalid entry:\nPhone cannot be blank");
+            emptyField.showAndWait();
+            return;
+        }
+        if (divisionId == 0){
+            Alert emptyField = new Alert(Alert.AlertType.ERROR, "Contact not selected.");
+            emptyField.showAndWait();
+            return;
+        }
 
         try {
             CustomerQuery.update(customerId, customerName, address, postalCode, phone, divisionId);
@@ -89,8 +113,6 @@ public class EditCustomerScreenController implements Initializable {
 
     @FXML
     public void setDivisionComboBox(ActionEvent actionEvent){
-
-        //small bug that causes division prompt to go blank if the country is changed
 
         String selectCountry = (String) countryComboBox.getSelectionModel().getSelectedItem().getCountryName();
 

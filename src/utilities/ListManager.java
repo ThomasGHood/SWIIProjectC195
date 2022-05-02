@@ -167,9 +167,9 @@ public class ListManager {
         return allStartHours;
     }
 
-    //Set Start Hours
-    public static void setAllStartHours(){
-        for (int x = 8; x < 22; x++){
+    //Set Start Hours (s was 8 and e was 22)
+    public static void setAllStartHours(int s, int e){
+        for (int x = s; x < e; x++){
             allStartHours.add(x);
         }
     }
@@ -179,9 +179,9 @@ public class ListManager {
         return allEndHours;
     }
 
-    //Set End Hours
-    public static void setAllEndHours(){
-        for (int x = 8; x < 23; x++){
+    //Set End Hours (s was 8 and e was 23)
+    public static void setAllEndHours(int s, int e){
+        for (int x = s; x < e; x++){
             allEndHours.add(x);
         }
     }

@@ -1,13 +1,6 @@
 package main;
 
-import model.Country;
-import utilities.CustomerQuery;
-import utilities.JDBC;
-import utilities.ListManager;
-
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 public class DebugMain {
     private static int customerIndex;
@@ -15,44 +8,60 @@ public class DebugMain {
     public static void main(String[] args) throws SQLException {
 
 
-
-        JDBC.openConnection();
-        CustomerQuery.selectCountry();
-        CustomerQuery.select();
-        Country t = new Country(3, "poopjelly");
-        Country c = new Country(7, "dodoland");
-        ListManager.addCountry(t);
-
-        int customerId = 25;
-        int hour = 12;
-        int minutes = 15;
-
-        LocalDateTime timeTest = LocalDateTime.now();
-
-//        LocalTime tempTime = LocalTime.parse(String.valueOf(hour));
-//        tempTime.plusMinutes(minutes);
-        LocalTime tTime = LocalTime.of(hour, minutes);
-
-        System.out.println(LocalDateTime.of(timeTest.toLocalDate(), tTime));
-
-//        System.out.println(timeTest);
-//        System.out.println(Timestamp.valueOf(timeTest));
-//        System.out.println(timeTest.toLocalTime());
-//        System.out.println(timeTest.toLocalDate());
-//        System.out.println(LocalDateTime.of(timeTest.toLocalDate(), timeTest.toLocalTime()));
-
-
-//        for (Customer customer : ListManager.getAllCustomers()){
-//            if(customerId == customer.getCustomerID()){
-//                customerIndex = ListManager.getAllCustomers().indexOf(customer.getCustomerID());
-//            }
-//        }
-
-        //customerIndex = ListManager.getAllCustomers().indexOf();
+//        LocalDate estDate = LocalDate.of(2021, 12, 31);
+//        LocalTime estTime = LocalTime.of(8, 00);
+//
+//        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy MMM dd | HH:mm");
+//
+//        ZoneId zoneTest = ZoneId.of("America/Vancouver");
+//        ZoneId businessZone = ZoneId.of("America/New_York");
+//
+//        ZoneId localZoneId = ZoneId.of(TimeZone.getDefault().getID());
+//
+//        //Take it from the combobox stuff, so you get a date, and you get a time, and you get a
+//
+//        ZonedDateTime estTimeZone = ZonedDateTime.of(estDate, estTime, businessZone);
+//        ZonedDateTime localSystemTimeZone = estTimeZone.withZoneSameInstant(localZoneId);
+//        ZonedDateTime localSystemTimeZone3 = localSystemTimeZone.withZoneSameInstant(zoneTest);
+//        ZonedDateTime localSystemTimeZone2 = localSystemTimeZone.withZoneSameInstant(localZoneId);
+//
+//        System.out.println(estTimeZone);
+//        System.out.println(localSystemTimeZone);
+//        System.out.println(localSystemTimeZone2);
+//        System.out.println(localSystemTimeZone3.toLocalTime());
+//
+//        ZoneId mstTimeZone = ZoneId.of("America/Denver");
+//
+//        System.out.println(estTimeZone.getOffset());
 
 
-//        System.out.println(ListManager.getAllCountries().get(1).getCountryName());
 
-        JDBC.closeConnection();
+//        System.out.println(localSystemTimeZone.getOffset());
+//        System.out.println(estTimeZone.getOffset());
+//
+//        System.out.println(estTimeZone.withZoneSameInstant(mstTimeZone).getOffset());
+
+
+
+        //System.out.println(ZonedDateTime.now().toInstant());
+        //System.out.println(ZonedDateTime.now().format(dtf));
+
+
+//        ZoneId.getAvailableZoneIds().stream().filter(c -> c.contains("Europe")).forEach(System.out::println);
+
+        int startA = -3;
+        int startB = 0;
+        int endA = 1;
+        int endB = 3;
+
+        if((startA < startB) && ((endA >= startB))){
+            System.out.println("included");
+        } else{
+            System.out.println("not");
+        }
+
+
+
+
     }
 }

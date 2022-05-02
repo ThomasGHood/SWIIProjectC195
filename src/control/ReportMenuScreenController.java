@@ -5,10 +5,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import main.Main;
 import model.Contact;
 import utilities.ListManager;
 import utilities.ReportsQuery;
+import utilities.UtilityFunctions;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -48,6 +48,12 @@ public class ReportMenuScreenController implements Initializable {
 
         if (reportOne.isSelected()) {
 
+            if (report1MonthCombo.getSelectionModel().isEmpty() || report1TypeCombo.getSelectionModel().isEmpty()){
+                Alert emptyField = new Alert(Alert.AlertType.ERROR, "Type and Month selections are required inputs!");
+                emptyField.showAndWait();
+                return;
+            }
+
             try {
                 ReportsQuery.report1Count(ReportsQuery.getMonthInt(report1MonthCombo.getSelectionModel().getSelectedItem()),
                         report1MonthCombo.getSelectionModel().getSelectedItem(),
@@ -59,7 +65,11 @@ public class ReportMenuScreenController implements Initializable {
 
         } else if (reportTwo.isSelected()){
 
-            System.out.println("Report Two is selected!");
+            if (report2ContactCombo.getSelectionModel().isEmpty()){
+                Alert emptyField = new Alert(Alert.AlertType.ERROR, "Contact must be selected!");
+                emptyField.showAndWait();
+                return;
+            }
 
             for (Contact contacts : ListManager.getAllContacts()){
                 if (contacts.getContactId() == report2ContactCombo.getSelectionModel().getSelectedItem().getContactId())
@@ -73,8 +83,6 @@ public class ReportMenuScreenController implements Initializable {
             MainScreenController.getSelectedContactID(report2ContactCombo.getSelectionModel().getSelectedItem().getContactId());
 
         } else if (reportThree.isSelected()){
-
-            System.out.println("Report Three is selected!");
 
             try {
                 ReportsQuery.report3Count();
@@ -97,7 +105,7 @@ public class ReportMenuScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            Main.refreshQuery();
+            UtilityFunctions.refreshQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         }

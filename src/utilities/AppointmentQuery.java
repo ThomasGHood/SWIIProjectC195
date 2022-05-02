@@ -158,9 +158,9 @@ public abstract class AppointmentQuery {
 
     //This method will populate the Appointments from the database.
     //TODO figure out the time/date stuff.
-    public static void selectContactSchedule() throws SQLException {
-        String sql = "SELECT Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID, User_ID," +
-                "Contact_ID FROM APPOINTMENTS\n ORDER BY Contact_ID";
+    public static void parseCustomerAppointment() throws SQLException {
+        String sql = "SELECT Start, End FROM APPOINTMENTS\n" +
+                "WHERE Customer_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {

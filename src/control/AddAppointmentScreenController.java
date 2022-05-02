@@ -5,12 +5,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import main.Main;
+import model.Appointment;
 import model.Contact;
 import model.Customer;
 import model.User;
 import utilities.AppointmentQuery;
 import utilities.ListManager;
+import utilities.UtilityFunctions;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -19,8 +20,7 @@ import java.time.LocalTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-//TODO *Add time restrictions (end time can't be less than start time)
-//TODO *Appointment can't overlap with other attendees appointments -- need to trigger a warning for conflict
+//TODO add Javadoc comments
 
 public class AddAppointmentScreenController implements Initializable {
 
@@ -65,18 +65,15 @@ public class AddAppointmentScreenController implements Initializable {
         int customerId = selectedCustomer.getCustomerID();
         User selectedUser = userIdCombobox.getValue();
         int userId = selectedUser.getUserID();
-        Contact selectedContact = contactCombobox.getValue();
-        int contactId = selectedContact.getContactId();
-        int startTimeMinutes = startTimeMinutesChoice.getValue();
-        int startTimeHours = startTimeHourChoice.getValue();
-        int endTimeMinutes = endTimeMinutesChoice.getValue();
-        int endTimeHours = endTimeHourChoice.getValue();
-
-        if (startTimeHours > endTimeHours || (startTimeHours == endTimeHours && startTimeMinutes > endTimeMinutes)){
-            Alert timeConflict = new Alert(Alert.AlertType.ERROR, "Start time cannot be greater than the end time.");
-            timeConflict.showAndWait();
+        Contact selectedContact = contactCombobox.getSelectionModel().getSelectedItem();
+        //TODO this has a bug, it isn't throwing an alert when this value is null
+        if (contactCombobox.getSelectionModel().isEmpty()){
+            Alert emptyField = new Alert(Alert.AlertType.ERROR, "Contact not selected.");
+            emptyField.showAndWait();
             return;
         }
+        int contactId = selectedContact.getContactId();
+
         if (appointmentTitle.isEmpty()){
             Alert emptyField = new Alert(Alert.AlertType.ERROR, "Appointment Title cannot be blank.");
             emptyField.showAndWait();
@@ -97,11 +94,6 @@ public class AddAppointmentScreenController implements Initializable {
             emptyField.showAndWait();
             return;
         }
-        if (contactId == 0){
-            Alert emptyField = new Alert(Alert.AlertType.ERROR, "Contact not selected.");
-            emptyField.showAndWait();
-            return;
-        }
         if (customerId == 0){
             Alert emptyField = new Alert(Alert.AlertType.ERROR, "Customer not selected.");
             emptyField.showAndWait();
@@ -119,7 +111,38 @@ public class AddAppointmentScreenController implements Initializable {
         LocalDateTime endTime = LocalDateTime.of(startEndDatePicker.getValue(),
                 LocalTime.of(endTimeHourChoice.getValue(), endTimeMinutesChoice.getValue()));
 
-        System.out.println(startEndDatePicker.getValue());
+        if (!endTime.isAfter(startTime)){
+            Alert endStart = new Alert(Alert.AlertType.ERROR, "End time must be after Start time");
+            endStart.showAndWait();
+            return;
+        }
+
+        //appointment overlap handling
+        for (Appointment appointment : ListManager.getALLCustomerAppointments()){
+            if(appointment.getCustomerID() == customerId){
+                if ((startTime.isBefore(appointment.getStartTime()) || startTime.isEqual(appointment.getStartTime())) &&
+                        (endTime.isAfter(appointment.getStartTime()) && (endTime.isBefore(appointment.getEndTime())
+                                || endTime.isEqual(appointment.getEndTime()) ||
+                                endTime.isAfter(appointment.getEndTime())))){
+                    Alert conflictAlert = new Alert(Alert.AlertType.WARNING,
+                            "There is a scheduling conflict with appointment ID [" + appointment.getAppointmentID() +
+                                    "]" + "\nPlease verify client available time.");
+                    conflictAlert.show();
+                    return;
+                }
+                if (((startTime.isAfter(appointment.getStartTime()) || startTime.isEqual(appointment.getStartTime()))
+                        && startTime.isBefore(appointment.getEndTime())) &&
+                        (endTime.isAfter(appointment.getStartTime()) && (endTime.isBefore(appointment.getEndTime()) ||
+                                endTime.isEqual(appointment.getEndTime()) ||
+                                endTime.isAfter(appointment.getEndTime())))){
+                    Alert conflictAlert = new Alert(Alert.AlertType.WARNING,
+                            "There is a scheduling conflict with appointment ID [" + appointment.getAppointmentID() +
+                                    "]" + "\nPlease verify client available time.");
+                    conflictAlert.show();
+                    return;
+                }
+            }
+        }
 
         try {
             AppointmentQuery.insert(appointmentTitle, appointmentDescription, appointmentLocation, appointmentType, startTime,
@@ -135,7 +158,7 @@ public class AddAppointmentScreenController implements Initializable {
         }
 
         try {
-            Main.refreshQuery();
+            UtilityFunctions.refreshQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -145,6 +168,7 @@ public class AddAppointmentScreenController implements Initializable {
         stage.close();
 
     }
+
     @FXML
     public void onActionCloseScreen(ActionEvent actionEvent){
 
@@ -181,7 +205,6 @@ public class AddAppointmentScreenController implements Initializable {
         endTimeMinutesChoice.setItems(ListManager.getAllMinutes());
         endTimeMinutesChoice.setValue(0);
         endTimeMinutesChoice.setVisibleRowCount(5);
-
 
     }
 }

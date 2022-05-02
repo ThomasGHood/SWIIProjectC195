@@ -7,15 +7,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import main.Main;
 import model.*;
 import utilities.JDBC;
 import utilities.ListManager;
+import utilities.UtilityFunctions;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -81,7 +80,7 @@ public class MainScreenController implements Initializable {
     @FXML
     public void onActionOpenManagerScreen(ActionEvent actionEvent) throws IOException{
 
-        Main.navigateMenu(actionEvent, "/view/ManagerScreen.fxml", "Customer Appointment Manager");
+        UtilityFunctions.navigateMenu(actionEvent, "/view/ManagerScreen.fxml", "Customer Appointment Manager");
 
     }
     @FXML
@@ -94,7 +93,7 @@ public class MainScreenController implements Initializable {
         if(result.isPresent() && result.get() == ButtonType.OK){
             Stage stage = (Stage) logout.getScene().getWindow();
             stage.close();
-            Main.navigateMenu(actionEvent, "/view/LoginScreen.fxml", "Login");
+            UtilityFunctions.navigateMenu(actionEvent, "/view/LoginScreen.fxml", "Login");
         }
 
     }
@@ -102,7 +101,7 @@ public class MainScreenController implements Initializable {
 
     public void reportWeek(MouseEvent mouseEvent) throws SQLException {
         //TODO needs to update when time changes or appointment is added
-        Main.refreshQuery();
+        UtilityFunctions.refreshQuery();
         reportTableView.setItems(ListManager.getAllWeekReport());
 
         appointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
@@ -120,7 +119,7 @@ public class MainScreenController implements Initializable {
 
     public void reportMonth(MouseEvent mouseEvent) throws SQLException {
         //TODO This needs to update when time changes or appointment is added
-        Main.refreshQuery();
+        UtilityFunctions.refreshQuery();
         reportTableView.setItems(ListManager.getAllMonthReport());
 
         appointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
@@ -192,19 +191,17 @@ public class MainScreenController implements Initializable {
 
     }
     public void onActionOpenReportMenu(ActionEvent event) throws IOException {
-        Main.navigateMenu(event, "/view/ReportMenuScreen.fxml", "Report Menu");
+        UtilityFunctions.navigateMenu(event, "/view/ReportMenuScreen.fxml", "Report Menu");
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        userNotificationsField.setText("Welcome!\n" +
-                "You have no pending appointments!"
-                + "\n\n\n" +
-                Timestamp.valueOf(LocalDateTime.now()));
+        userNotificationsField.setText("Welcome!");
+
+
 
         reportTableView.setItems(ListManager.getALLCustomerAppointments());
-
         appointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
         customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         userIdCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
@@ -215,6 +212,8 @@ public class MainScreenController implements Initializable {
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         startDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         endDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+
+
 
     }
 

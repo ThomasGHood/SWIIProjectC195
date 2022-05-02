@@ -6,12 +6,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import main.Main;
 import model.Appointment;
 import model.Customer;
 import utilities.AppointmentQuery;
 import utilities.CustomerQuery;
 import utilities.ListManager;
+import utilities.UtilityFunctions;
 
 import java.io.IOException;
 import java.net.URL;
@@ -74,7 +74,7 @@ public class ManagerScreenController implements Initializable {
     @FXML
     public void onActionOpenAddCustomerScreen(ActionEvent actionEvent) throws IOException {
 
-        Main.navigateMenu(actionEvent, "/view/AddCustomerScreen.fxml", "Customer Adder");
+        UtilityFunctions.navigateMenu(actionEvent, "/view/AddCustomerScreen.fxml", "Customer Adder");
 
     }
 
@@ -86,17 +86,12 @@ public class ManagerScreenController implements Initializable {
         if (selectedCustomer != null){
             EditCustomerScreenController.getSelectedCustomer(customerTableView.getSelectionModel().getSelectedItem());
 
-            Main.navigateMenu(actionEvent, "/view/EditCustomerScreen.fxml", "Customer Editor");
+            UtilityFunctions.navigateMenu(actionEvent, "/view/EditCustomerScreen.fxml", "Customer Editor");
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING, "No customer selected!");
+            alert.showAndWait();
 
-            Optional<ButtonType> result = alert.showAndWait();
-
-            if(result.isPresent() && (result.get() == ButtonType.OK)) {
-                // do nothing
-            }
         }
-        customerTableView.refresh();
 
     }
 
@@ -137,7 +132,7 @@ public class ManagerScreenController implements Initializable {
         }
 
         try {
-            Main.refreshQuery();
+            UtilityFunctions.refreshQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -147,34 +142,30 @@ public class ManagerScreenController implements Initializable {
     @FXML
     public void onActionOpenAddAppointmentScreen(ActionEvent actionEvent) throws IOException {
 
-        Main.navigateMenu(actionEvent, "/view/AddAppointmentScreen.fxml", "Appointment Adder");
+        UtilityFunctions.navigateMenu(actionEvent, "/view/AddAppointmentScreen.fxml", "Appointment Adder");
 
     }
 
     @FXML
     public void onActionOpenEditAppointmentScreen(ActionEvent actionEvent) throws IOException {
 
-        //Main.navigateMenu(actionEvent, "/view/EditAppointmentScreen.fxml", "Appointment Editor");
+        //UtilityFunctions.navigateMenu(actionEvent, "/view/EditAppointmentScreen.fxml", "Appointment Editor");
+        try {
+            UtilityFunctions.refreshQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         selectedAppointment = appointmentsTableView.getSelectionModel().getSelectedItem();
 
         if (selectedAppointment != null){
             EditAppointmentScreenController.getSelectedAppointment(appointmentsTableView.getSelectionModel().getSelectedItem());
 
-            Main.navigateMenu(actionEvent, "/view/EditAppointmentScreen.fxml", "Appointment Editor");
+            UtilityFunctions.navigateMenu(actionEvent, "/view/EditAppointmentScreen.fxml", "Appointment Editor");
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING, "No appointment selected!");
+            alert.showAndWait();
 
-            Optional<ButtonType> result = alert.showAndWait();
-
-            if(result.isPresent() && (result.get() == ButtonType.OK)) {
-                // do nothing
-            }
-        }
-        try {
-            Main.refreshQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
 
     }
@@ -201,7 +192,7 @@ public class ManagerScreenController implements Initializable {
             note.showAndWait();
         }
         try {
-            Main.refreshQuery();
+            UtilityFunctions.refreshQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         }

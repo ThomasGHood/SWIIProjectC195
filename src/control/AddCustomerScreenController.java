@@ -45,6 +45,32 @@ public class AddCustomerScreenController implements Initializable {
         Divisions selectedDivision = divisionComboBox.getValue();
         int divisionId = selectedDivision.getDivisionId();
 
+        if (customerName.isEmpty()){
+            Alert emptyField = new Alert(Alert.AlertType.ERROR, "Invalid entry:\nCustomer Name cannot be blank.");
+            emptyField.showAndWait();
+            return;
+        }
+        if (address.isEmpty()){
+            Alert emptyField = new Alert(Alert.AlertType.ERROR, "Invalid entry:\nAddress cannot be blank");
+            emptyField.showAndWait();
+            return;
+        }
+        if (postalCode.isEmpty()){
+            Alert emptyField = new Alert(Alert.AlertType.ERROR, "Invalid entry:\nPostal Code cannot be blank");
+            emptyField.showAndWait();
+            return;
+        }
+        if (phone.isEmpty()){
+            Alert emptyField = new Alert(Alert.AlertType.ERROR, "Invalid entry:\nPhone cannot be blank");
+            emptyField.showAndWait();
+            return;
+        }
+        if (divisionId == 0){
+            Alert emptyField = new Alert(Alert.AlertType.ERROR, "Contact not selected.");
+            emptyField.showAndWait();
+            return;
+        }
+
         try {
             CustomerQuery.insert(customerName, address, postalCode, phone, divisionId);
         } catch (SQLException e) {

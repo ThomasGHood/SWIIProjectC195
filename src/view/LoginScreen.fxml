@@ -15,7 +15,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label text="User Name: " />
+                  <Label fx:id="userNameLabel"/>
                   <TextField fx:id="userName">
                      <HBox.margin>
                         <Insets left="15.0" right="15.0" />
@@ -28,7 +28,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label text="Password: " />
+                  <Label fx:id="passwordLabel" />
                   <PasswordField fx:id="password">
                      <HBox.margin>
                         <Insets left="8.0" />
@@ -41,7 +41,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
                <children>
-                  <Label text="Location:" />
+                  <Label fx:id="locationLabel" />
                   <Label fx:id="zoneID" text="USA" />
                </children>
                <VBox.margin>
@@ -53,8 +53,8 @@
             </HBox>
             <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
                <children>
-                  <Button fx:id="loginButton" mnemonicParsing="false" onAction="#onActionLoadMainMenu" text="Login" />
-                  <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#onActionCloseScreen" text="Cancel" />
+                  <Button fx:id="loginButton" mnemonicParsing="false" onAction="#onActionLoadMainMenu" />
+                  <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#onActionCloseScreen" />
                </children>
                <padding>
                   <Insets bottom="25.0" left="25.0" right="25.0" top="150.0" />
