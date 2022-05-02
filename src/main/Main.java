@@ -1,13 +1,4 @@
 package main;
-/*
-Thomas Hood
-S. ID # 001465347
- */
-
-// Username and password must be "test" per PA requirements
-// Business hours are defined as 8:00am to 10:00pm EST, including weekends
-// all time must be displayed in the system's local time
-
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -15,11 +6,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import utilities.*;
-
 import java.sql.SQLException;
 import java.time.ZoneId;
 import java.util.Locale;
 
+/**
+ * Thomas Hood
+ * S. ID # 001465347
+ *
+ * 2022 May 01
+ *
+ * Main Class is the entry point to the application.
+ */
 public class Main extends Application {
 
 
@@ -32,6 +30,18 @@ public class Main extends Application {
         stage.show();
     }
 
+    /**
+     * main method:
+     *  -initializes database connection.
+     *  -calls methods to populate observable lists used by the app to interface
+     *   with the database.
+     *  -default ZoneId is set.
+     *  -default Locale is set.
+     *  -launches the GUI
+     *
+     * @param args the input arguments
+     * @throws SQLException the sql exception
+     */
     public static void main(String[] args) throws SQLException {
 
         JDBC.openConnection();
@@ -52,13 +62,10 @@ public class Main extends Application {
         UtilityFunctions.timeZoneHandling();
 
         ZoneId.systemDefault();
-
         Locale.getDefault();
-
 
         launch(args);
 
     }
-
 
 }

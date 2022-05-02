@@ -14,6 +14,10 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * The ReportMenuScreenController class.
+ * This class allows the user to select a report to send to the user dashboard for viewing.
+ */
 public class ReportMenuScreenController implements Initializable {
 
     private final StringBuilder previewFormat = new StringBuilder();
@@ -41,8 +45,12 @@ public class ReportMenuScreenController implements Initializable {
     private ComboBox<Contact> report2ContactCombo;
 
 
-
-
+    /**
+     * onActionLaunchReport method
+     * sends the selected report to the user dashboard.
+     *
+     * @param event the event
+     */
     @FXML
     public void onActionLaunchReport(ActionEvent event){
 
@@ -96,6 +104,12 @@ public class ReportMenuScreenController implements Initializable {
         stage.close();
     }
 
+    /**
+     * onActionCancelSelection method
+     * closes the window without making a selection.
+     *
+     * @param event the event
+     */
     @FXML
     public void onActionCancelSelection(ActionEvent event){
         Stage stage = (Stage) cancelReport.getScene().getWindow();

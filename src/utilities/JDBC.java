@@ -3,6 +3,10 @@ package utilities;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+/**
+ * The JDBC class.
+ * This class configures the database connection.
+ */
 public abstract class JDBC {
 
     private static final String protocol = "jdbc";
@@ -13,8 +17,14 @@ public abstract class JDBC {
     private static final String driver = "com.mysql.cj.jdbc.Driver"; // Driver reference
     private static final String userName = "sqlUser"; // Username
     private static String password = "passw0rd!"; // Password
+    /**
+     * The constant connection.
+     */
     public static Connection connection;  // Connection Interface
 
+    /**
+     * Open connection.
+     */
     public static void openConnection()
     {
         try {
@@ -28,6 +38,9 @@ public abstract class JDBC {
         }
     }
 
+    /**
+     * Close connection.
+     */
     public static void closeConnection() {
         try {
             connection.close();

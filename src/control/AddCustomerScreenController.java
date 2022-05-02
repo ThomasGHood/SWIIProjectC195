@@ -15,6 +15,10 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * The AddCustomerScreenController Class.
+ * Adds a new user specified Customer object to the database.
+ */
 public class AddCustomerScreenController implements Initializable {
 
     @FXML
@@ -36,6 +40,12 @@ public class AddCustomerScreenController implements Initializable {
     @FXML
     private ComboBox<Divisions> divisionComboBox;
 
+    /**
+     * onActionSaveChanges method
+     * input is validated before saving the new Customer object to the database.
+     *
+     * @param actionEvent the action event
+     */
     @FXML
     public void onActionSaveChanges(ActionEvent actionEvent){
         String customerName = customerNameText.getText();
@@ -90,6 +100,12 @@ public class AddCustomerScreenController implements Initializable {
     }
 
 
+    /**
+     * onActionCloseScreen method
+     * screen is closed without making any changes.
+     *
+     * @param actionEvent the action event
+     */
     @FXML
     public void onActionCloseScreen(ActionEvent actionEvent){
 
@@ -103,12 +119,14 @@ public class AddCustomerScreenController implements Initializable {
         }
     }
 
-    // Minor improvement would be to make it so that when the country is changed, it returns the divsion combobox
-    // back to "Select Divsion"..
+    /**
+     * setDivisionComboBox method
+     * this method is used to populate the divsionComboBox.
+     *
+     * @param actionEvent the action event
+     */
     @FXML
     public void setDivisionComboBox(ActionEvent actionEvent){
-
-        //small bug that causes division prompt to go blank if the country is changed
 
         String selectCountry = (String) countryComboBox.getSelectionModel().getSelectedItem().getCountryName();
 

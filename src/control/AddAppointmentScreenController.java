@@ -20,8 +20,10 @@ import java.time.LocalTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-//TODO add Javadoc comments
-
+/**
+ * The AddAppointmentScreenController class.
+ * This class adds new Appointment objects to the database.
+ */
 public class AddAppointmentScreenController implements Initializable {
 
     @FXML
@@ -54,9 +56,15 @@ public class AddAppointmentScreenController implements Initializable {
     private ComboBox<Integer> endTimeMinutesChoice;
 
 
+    /**
+     * onActionSaveChanges method
+     * validates user input prior to saving the new Appointment object to the database.
+     *
+     * @param actionEvent the action event
+     */
     @FXML
     public void onActionSaveChanges(ActionEvent actionEvent){
-        //TODO timezones
+
         String appointmentTitle = appointmentTitleText.getText();
         String appointmentDescription = appointmentDescriptionText.getText();
         String appointmentLocation = appointmentLocationText.getText();
@@ -66,7 +74,6 @@ public class AddAppointmentScreenController implements Initializable {
         User selectedUser = userIdCombobox.getValue();
         int userId = selectedUser.getUserID();
         Contact selectedContact = contactCombobox.getSelectionModel().getSelectedItem();
-        //TODO this has a bug, it isn't throwing an alert when this value is null
         if (contactCombobox.getSelectionModel().isEmpty()){
             Alert emptyField = new Alert(Alert.AlertType.ERROR, "Contact not selected.");
             emptyField.showAndWait();
@@ -169,6 +176,12 @@ public class AddAppointmentScreenController implements Initializable {
 
     }
 
+    /**
+     * onActionCloseScreen method
+     * closes screen without making any changes.
+     *
+     * @param actionEvent the action event
+     */
     @FXML
     public void onActionCloseScreen(ActionEvent actionEvent){
 

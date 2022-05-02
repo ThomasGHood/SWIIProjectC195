@@ -20,10 +20,11 @@ import java.sql.Time;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-//TODO *display "Cancelled" for removed appointment
-//TODO *customer with appointment can't be deleted until the appointment the customer is involved with has been cancelled.
-//TODO improve appearance.
-
+/**
+ * The ManagerScreenController class.
+ * This screen displays a preview of Customer objects and Appointment objects as well as
+ * access to add/update/delete Customers and Appointments.
+ */
 public class ManagerScreenController implements Initializable {
 
     private Customer selectedCustomer;
@@ -71,6 +72,13 @@ public class ManagerScreenController implements Initializable {
     private TableColumn<Appointment, Time> appointmentsEndTimeCol;
 
 
+    /**
+     * OnActionOpenAddCustomerScreen method
+     * opens the AddCustomerScreenController.
+     *
+     * @param actionEvent the action event
+     * @throws IOException the io exception
+     */
     @FXML
     public void onActionOpenAddCustomerScreen(ActionEvent actionEvent) throws IOException {
 
@@ -78,6 +86,13 @@ public class ManagerScreenController implements Initializable {
 
     }
 
+    /**
+     * onActionOpenEditCustomerScreen method
+     * opens the EditCustomerScreenController.
+     *
+     * @param actionEvent the action event
+     * @throws IOException the io exception
+     */
     @FXML
     public void onActionOpenEditCustomerScreen(ActionEvent actionEvent) throws IOException {
 
@@ -95,9 +110,15 @@ public class ManagerScreenController implements Initializable {
 
     }
 
+    /**
+     * onActionDeleteSelectedCustomer method
+     * after confirmation, the selected customer is removed along with all associated appointments.
+     *
+     * @param actionEvent the action event
+     */
     @FXML
     public void onActionDeleteSelectedCustomer(ActionEvent actionEvent) {
-        //TODO need to add functionality to block deletion of customer if the customer has appointments
+
         String deletedName = customerTableView.getSelectionModel().getSelectedItem().getCustomerName();
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete selected customer and all associated appointments?");
@@ -139,6 +160,13 @@ public class ManagerScreenController implements Initializable {
 
     }
 
+    /**
+     * onActionOpenAddAppointmentScreen method
+     * opens AddAppointmentScreen
+     *
+     * @param actionEvent the action event
+     * @throws IOException the io exception
+     */
     @FXML
     public void onActionOpenAddAppointmentScreen(ActionEvent actionEvent) throws IOException {
 
@@ -146,10 +174,16 @@ public class ManagerScreenController implements Initializable {
 
     }
 
+    /**
+     * onActionOpenEditAppointmentScreen method
+     * opens the EditAppointmentScreen.
+     *
+     * @param actionEvent the action event
+     * @throws IOException the io exception
+     */
     @FXML
     public void onActionOpenEditAppointmentScreen(ActionEvent actionEvent) throws IOException {
 
-        //UtilityFunctions.navigateMenu(actionEvent, "/view/EditAppointmentScreen.fxml", "Appointment Editor");
         try {
             UtilityFunctions.refreshQuery();
         } catch (SQLException e) {
@@ -170,6 +204,12 @@ public class ManagerScreenController implements Initializable {
 
     }
 
+    /**
+     * onActionDeleteSelectedAppointment method
+     * selected appointment is deleted after confirmation prompt.
+     *
+     * @param actionEvent the action event
+     */
     @FXML
     public void onActionDeleteSelectedAppointment(ActionEvent actionEvent) {
 
@@ -200,6 +240,12 @@ public class ManagerScreenController implements Initializable {
     }
 
 
+    /**
+     * onActionCloseScreen method
+     * the ManagerScreen is closed.
+     *
+     * @param actionEvent the action event
+     */
     @FXML
     public void onActionCloseScreen(ActionEvent actionEvent){
         Stage stage = (Stage) backButton.getScene().getWindow();

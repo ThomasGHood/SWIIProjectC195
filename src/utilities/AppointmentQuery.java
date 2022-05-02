@@ -8,10 +8,26 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-//TODO this class is intended to query the database to populate the Appointment tableview
+/**
+ * The AppointmentQuery class.
+ */
 public abstract class AppointmentQuery {
 
-    //TODO verify Timestamp / LocalDateTime is functioning as expected.
+    /**
+     * Insert method inserts a new Appointment into the database.
+     *
+     * @param title       the title
+     * @param description the description
+     * @param location    the location
+     * @param type        the type
+     * @param startTime   the start time
+     * @param endTime     the end time
+     * @param customerId  the customer id
+     * @param userId      the user id
+     * @param contactId   the contact id
+     * @return the int
+     * @throws SQLException the sql exception
+     */
     public static int insert(String title, String description, String location, String type, LocalDateTime startTime,
                              LocalDateTime endTime, int customerId, int userId, int contactId) throws SQLException {
         String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) " +
@@ -30,7 +46,22 @@ public abstract class AppointmentQuery {
         return rowsAffected;
     }
 
-    //TODO verify works after conversion
+    /**
+     * Update method updates values of an existing appointment in the database.
+     *
+     * @param appointmentId the appointment id
+     * @param title         the title
+     * @param description   the description
+     * @param location      the location
+     * @param type          the type
+     * @param startTime     the start time
+     * @param endTime       the end time
+     * @param customerId    the customer id
+     * @param userId        the user id
+     * @param contactId     the contact id
+     * @return the int
+     * @throws SQLException the sql exception
+     */
     public static int update(int appointmentId, String title, String description, String location, String type, LocalDateTime startTime,
                              LocalDateTime endTime, int customerId, int userId, int contactId) throws SQLException {
         String sql = "UPDATE APPOINTMENTS SET Title = ?, Description = ?, Location = ?, Type = ?, " +
@@ -50,8 +81,12 @@ public abstract class AppointmentQuery {
         return rowsAffected;
     }
 
-    //This method will populate the Appointments from the database.
-    //TODO figure out the time/date stuff.
+    /**
+     * Select method
+     * Queries the database and populates an Appointment ObservableList.
+     *
+     * @throws SQLException the sql exception
+     */
     public static void select() throws SQLException {
         String sql = "SELECT Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID, User_ID," +
                 "Contact_ID FROM APPOINTMENTS";
@@ -78,8 +113,13 @@ public abstract class AppointmentQuery {
     }
 
 
-    //TODO verify working as expected
-    // This method gets the last (most recently added to the DB) and adds it to the customers observablelist.
+    /**
+     * selectLast method
+     * Queries the database for the last Appointment added to the database,
+     * appends the record to the Appointment ObservableList
+     *
+     * @throws SQLException the sql exception
+     */
     public static void selectLast() throws SQLException {
         String sql = "SELECT Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID, User_ID," +
                 "Contact_ID FROM APPOINTMENTS\n" + "ORDER BY Appointment_ID DESC LIMIT 1";
@@ -104,8 +144,13 @@ public abstract class AppointmentQuery {
         }
     }
 
-    //This method will populate the Appointments from the database.
-    //TODO figure out the time/date stuff.
+    /**
+     * selectWeek method
+     * Queries the database to populate an Appointment ObserveableList
+     * used to display appointments in the week.
+     *
+     * @throws SQLException the sql exception
+     */
     public static void selectWeek() throws SQLException {
         String sql = "SELECT Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID, User_ID," +
                 "Contact_ID FROM APPOINTMENTS\n WHERE DATE(Start) BETWEEN NOW() AND (NOW() + INTERVAL 1 WEEK)";
@@ -131,7 +176,14 @@ public abstract class AppointmentQuery {
         }
     }
 
-    //This method will populate the Appointments from the database.
+    /**
+     * selectMonth method
+     * Queries the database to populate an Appointment ObservableList
+     * used to display appointments in the month.
+     *
+     * @throws SQLException the sql exception
+     */
+//This method will populate the Appointments from the database.
     //TODO figure out the time/date stuff.
     public static void selectMonth() throws SQLException {
         String sql = "SELECT Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID, User_ID," +
@@ -156,33 +208,14 @@ public abstract class AppointmentQuery {
         }
     }
 
-    //This method will populate the Appointments from the database.
-    //TODO figure out the time/date stuff.
-    public static void parseCustomerAppointment() throws SQLException {
-        String sql = "SELECT Start, End FROM APPOINTMENTS\n" +
-                "WHERE Customer_ID = ?";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            int appointmentId = rs.getInt("Appointment_ID");
-            String appointmentTitle = rs.getString("Title");
-            String appointmentDescription = rs.getString("Description");
-            String appointmentLocation = rs.getString("Location");
-            String appointmentType = rs.getString("Type");
-            LocalDateTime appointmentStartTime = rs.getTimestamp("Start").toLocalDateTime();
-            LocalDateTime appointmentEndTime = rs.getTimestamp("End").toLocalDateTime();
-            int appointmentCustomerId = rs.getInt("Customer_ID");
-            int appointmentUserId = rs.getInt("User_ID");
-            int appointmentContactId = rs.getInt("Contact_ID");
-
-            //TODO change this to correct list
-            ListManager.addMonthReport(new Appointment(appointmentId, appointmentTitle, appointmentDescription,
-                    appointmentLocation, appointmentType, appointmentStartTime, appointmentEndTime,
-                    appointmentCustomerId, appointmentUserId, appointmentContactId));
-        }
-    }
-
-
+    /**
+     * Delete method
+     * deletes an appointment from the database.
+     *
+     * @param appointmentId the appointment id
+     * @return the int
+     * @throws SQLException the sql exception
+     */
     public static int delete(int appointmentId) throws SQLException {
         String sql = "DELETE FROM APPOINTMENTS WHERE Appointment_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);

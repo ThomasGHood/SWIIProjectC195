@@ -21,12 +21,10 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-// TODO login screen needs to determine the user's location (ZoneID) displayed as a
-// label on the login screen
-// Needs to display the login screen in English or French based on the user's computer
-// Language settings to translate all text, labels, buttons, and errors on the form
-// automatically translates error messages to English or French
-
+/**
+ * The LoginScreenController class.
+ * This class is the first screen where user login credentials stored in the database are used.
+ */
 public class LoginScreenController implements Initializable {
 
     private ResourceBundle translatedText = ResourceBundle.getBundle("LoginLanguage", Locale.getDefault());
@@ -49,6 +47,13 @@ public class LoginScreenController implements Initializable {
     private Label locationLabel;
 
 
+    /**
+     * onActionLoadMainMenu method
+     * this method closes the login screen and opens the main screen.
+     *
+     * @param actionEvent the action event
+     * @throws IOException the io exception
+     */
     @FXML
     public void onActionLoadMainMenu(ActionEvent actionEvent) throws IOException {
 
@@ -91,6 +96,12 @@ public class LoginScreenController implements Initializable {
         activityOutput.setLength(0);
     }
 
+    /**
+     * onActionCloseScreen method
+     * the application is closed.
+     *
+     * @param actionEvent the action event
+     */
     @FXML
     public void onActionCloseScreen(ActionEvent actionEvent){
 

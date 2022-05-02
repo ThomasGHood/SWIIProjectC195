@@ -16,6 +16,10 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * The EditCustomerScreenController class.
+ * This class is used to update existing Customer and saves changes to the database.
+ */
 public class EditCustomerScreenController implements Initializable {
 
     private static Customer selectedCustomer;
@@ -38,10 +42,21 @@ public class EditCustomerScreenController implements Initializable {
     @FXML
     private ComboBox<Divisions> divisionsComboBox;
 
+    /**
+     * Get selected customer.
+     *
+     * @param customer the customer
+     */
     public static void getSelectedCustomer(Customer customer){
         selectedCustomer = customer;
     }
 
+    /**
+     * onActionSaveChanges method
+     * validates input, then saves changes to Customer object in the database.
+     *
+     * @param actionEvent the action event
+     */
     @FXML
     public void onActionSaveChanges(ActionEvent actionEvent){
 
@@ -98,6 +113,13 @@ public class EditCustomerScreenController implements Initializable {
         Stage stage = (Stage) saveButton.getScene().getWindow();
         stage.close();
     }
+
+    /**
+     * onActionCloseScreen method
+     * closes the screen without making any changes.
+     *
+     * @param actionEvent the action event
+     */
     @FXML
     public void onActionCloseScreen(ActionEvent actionEvent){
 
@@ -111,6 +133,12 @@ public class EditCustomerScreenController implements Initializable {
         }
     }
 
+    /**
+     * setDivisionComboBox method
+     * this method is used to populate the divsionComboBox.
+     *
+     * @param actionEvent the action event
+     */
     @FXML
     public void setDivisionComboBox(ActionEvent actionEvent){
 

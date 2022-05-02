@@ -6,8 +6,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * The UserQuery class.
+ */
 public class UserQuery {
 
+    /**
+     * select method
+     * queries the database to populate User ObservableList.
+     *
+     * @throws SQLException the sql exception
+     */
     public static void select() throws SQLException {
         String sql = "SELECT User_ID, User_Name, Password FROM USERS";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);

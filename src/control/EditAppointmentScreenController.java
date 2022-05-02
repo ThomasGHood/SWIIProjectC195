@@ -22,6 +22,10 @@ import java.util.Scanner;
 
 //TODO add Javadoc comments
 
+/**
+ * The EditAppointmentScreenController class.
+ * this class updates existing Appointment objects in the database.
+ */
 public class EditAppointmentScreenController implements Initializable {
 
     private static Appointment selectedAppointment;
@@ -56,10 +60,21 @@ public class EditAppointmentScreenController implements Initializable {
     @FXML
     private ComboBox<Integer> endTimeMinutesChoice;
 
+    /**
+     * Get selected appointment.
+     *
+     * @param appointment the appointment
+     */
     public static void getSelectedAppointment(Appointment appointment){
         selectedAppointment = appointment;
     }
 
+    /**
+     * onActionSaveChanges method
+     * validates input, then updates an existing Appointment object in the database.
+     *
+     * @param actionEvent the action event
+     */
     @FXML
     public void onActionSaveChanges(ActionEvent actionEvent){
 
@@ -167,6 +182,13 @@ public class EditAppointmentScreenController implements Initializable {
         Stage stage = (Stage) saveButton.getScene().getWindow();
         stage.close();
     }
+
+    /**
+     * onActionCloseScreen method
+     * closes the screen without making any changes.
+     *
+     * @param actionEvent the action event
+     */
     @FXML
     public void onActionCloseScreen(ActionEvent actionEvent){
 

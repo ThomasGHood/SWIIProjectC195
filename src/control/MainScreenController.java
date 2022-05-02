@@ -19,6 +19,10 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * The MainScreenController class.
+ * This class is the user's "dashboard" where reports can be viewed.
+ */
 public class MainScreenController implements Initializable {
 
 
@@ -59,11 +63,21 @@ public class MainScreenController implements Initializable {
     private TableColumn<Appointment, Integer> userIdCol;
 
 
-
+    /**
+     * Get selected contact id.
+     *
+     * @param contactID the contact id
+     */
     public static void getSelectedContactID(int contactID){
         selectedContactID = contactID;
     }
 
+    /**
+     * onActionExit method
+     * the application is closed.
+     *
+     * @param actionEvent the action event
+     */
     @FXML
     public void onActionExit(ActionEvent actionEvent){
 
@@ -77,12 +91,27 @@ public class MainScreenController implements Initializable {
         }
     }
 
+    /**
+     * OnActionOpenManagerScreen method
+     * opens the manager screen.
+     *
+     * @param actionEvent the action event
+     * @throws IOException the io exception
+     */
     @FXML
     public void onActionOpenManagerScreen(ActionEvent actionEvent) throws IOException{
 
         UtilityFunctions.navigateMenu(actionEvent, "/view/ManagerScreen.fxml", "Customer Appointment Manager");
 
     }
+
+    /**
+     * onActionReturnToLogin method
+     * exits the dashboard and returns to the Login screen.
+     *
+     * @param actionEvent the action event
+     * @throws IOException the io exception
+     */
     @FXML
     public void onActionReturnToLogin(ActionEvent actionEvent) throws IOException {
 
@@ -99,6 +128,13 @@ public class MainScreenController implements Initializable {
     }
 
 
+    /**
+     * reportWeek method
+     * displays appointments of the week.
+     *
+     * @param mouseEvent the mouse event
+     * @throws SQLException the sql exception
+     */
     public void reportWeek(MouseEvent mouseEvent) throws SQLException {
         //TODO needs to update when time changes or appointment is added
         UtilityFunctions.refreshQuery();
@@ -117,6 +153,13 @@ public class MainScreenController implements Initializable {
 
     }
 
+    /**
+     * reportMonth method
+     * displays appointments of the month.
+     *
+     * @param mouseEvent the mouse event
+     * @throws SQLException the sql exception
+     */
     public void reportMonth(MouseEvent mouseEvent) throws SQLException {
         //TODO This needs to update when time changes or appointment is added
         UtilityFunctions.refreshQuery();
@@ -135,6 +178,12 @@ public class MainScreenController implements Initializable {
 
     }
 
+    /**
+     * onActionResetAppointmentsTableView method
+     * resets the TableView to display all appointments.
+     *
+     * @param event the event
+     */
     public void onActionResetAppointmentsTableView(ActionEvent event){
         reportTableView.setItems(ListManager.getALLCustomerAppointments());
 
@@ -150,6 +199,12 @@ public class MainScreenController implements Initializable {
         endDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("endTime"));
     }
 
+    /**
+     * onActionDisplayReport method
+     * displays the report selected from the ReportMenu.
+     *
+     * @param event the event
+     */
     @FXML
     public void onActionDisplayReport(ActionEvent event){
         StringBuilder userNotificationsReport = new StringBuilder("");
@@ -190,6 +245,14 @@ public class MainScreenController implements Initializable {
         }
 
     }
+
+    /**
+     * onActionOpenReportMenu method
+     * opens the ReportMenu.
+     *
+     * @param event the event
+     * @throws IOException the io exception
+     */
     public void onActionOpenReportMenu(ActionEvent event) throws IOException {
         UtilityFunctions.navigateMenu(event, "/view/ReportMenuScreen.fxml", "Report Menu");
     }
