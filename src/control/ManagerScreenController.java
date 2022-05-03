@@ -24,6 +24,8 @@ import java.util.ResourceBundle;
  * The ManagerScreenController class.
  * This screen displays a preview of Customer objects and Appointment objects as well as
  * access to add/update/delete Customers and Appointments.
+ *
+ * @author Thomas Hood
  */
 public class ManagerScreenController implements Initializable {
 

@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 /**
  * The JDBC class.
  * This class configures the database connection.
+ *
+ * @author Thomas Hood
  */
 public abstract class JDBC {
 

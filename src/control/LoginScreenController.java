@@ -24,6 +24,8 @@ import java.util.ResourceBundle;
 /**
  * The LoginScreenController class.
  * This class is the first screen where user login credentials stored in the database are used.
+ *
+ * @author Thomas Hood
  */
 public class LoginScreenController implements Initializable {
 

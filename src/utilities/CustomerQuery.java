@@ -10,6 +10,8 @@ import java.sql.SQLException;
 
 /**
  * The CustomerQuery class.
+ *
+ * @author Thomas Hood
  */
 public abstract class CustomerQuery {
 

@@ -3,6 +3,8 @@ package model;
 /**
  * The User class.
  * This class models a User.
+ *
+ * @author Thomas Hood
  */
 public class User {
 

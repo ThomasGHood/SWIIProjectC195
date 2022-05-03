@@ -8,6 +8,8 @@ import java.sql.SQLException;
 
 /**
  * The UserQuery class.
+ *
+ * @author Thomas Hood
  */
 public class UserQuery {
 

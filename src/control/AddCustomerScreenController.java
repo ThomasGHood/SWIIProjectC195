@@ -18,6 +18,8 @@ import java.util.ResourceBundle;
 /**
  * The AddCustomerScreenController Class.
  * Adds a new user specified Customer object to the database.
+ *
+ * @author Thomas Hood
  */
 public class AddCustomerScreenController implements Initializable {
 

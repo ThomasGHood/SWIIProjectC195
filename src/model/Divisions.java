@@ -3,6 +3,8 @@ package model;
 /**
  * The Divisions class.
  * This class models a Division.
+ *
+ * @author Thomas Hood
  */
 public class Divisions {
     private int divisionId;

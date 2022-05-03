@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Contact;
 import utilities.ListManager;
+import utilities.MonthToInt;
 import utilities.ReportsQuery;
 import utilities.UtilityFunctions;
 
@@ -17,6 +18,8 @@ import java.util.ResourceBundle;
 /**
  * The ReportMenuScreenController class.
  * This class allows the user to select a report to send to the user dashboard for viewing.
+ *
+ * @author Thomas Hood
  */
 public class ReportMenuScreenController implements Initializable {
 
@@ -49,10 +52,44 @@ public class ReportMenuScreenController implements Initializable {
      * onActionLaunchReport method
      * sends the selected report to the user dashboard.
      *
-     * @param event the event
+     * Lambda Expression:
+     *     -converts days of the month to Int to select corresponding month in database.
+     *     -eliminates need to create entire method.
+     *
+     * @param event sends selected report to user dashboard.
      */
     @FXML
     public void onActionLaunchReport(ActionEvent event){
+
+        MonthToInt monthInt = month -> {
+            switch (month){
+                case "Jan":
+                    return 1;
+                case "Feb":
+                    return 2;
+                case "Mar":
+                    return 3;
+                case "Apr":
+                    return 4;
+                case "May":
+                    return 5;
+                case "Jun":
+                    return 6;
+                case "Jul":
+                    return 7;
+                case "Aug":
+                    return 8;
+                case "Sep":
+                    return 9;
+                case "Oct":
+                    return 10;
+                case "Nov":
+                    return 11;
+                case "Dec":
+                    return 12;
+            }
+            return -1;
+        };
 
         if (reportOne.isSelected()) {
 
@@ -63,7 +100,7 @@ public class ReportMenuScreenController implements Initializable {
             }
 
             try {
-                ReportsQuery.report1Count(ReportsQuery.getMonthInt(report1MonthCombo.getSelectionModel().getSelectedItem()),
+                ReportsQuery.report1Count(monthInt.returnMonth(report1MonthCombo.getSelectionModel().getSelectedItem()),
                         report1MonthCombo.getSelectionModel().getSelectedItem(),
                         report1TypeCombo.getSelectionModel().getSelectedItem());
             } catch (SQLException e) {
@@ -152,7 +189,5 @@ public class ReportMenuScreenController implements Initializable {
         previewFormat.append("Contact_ID | Contact_Name | Number of Customers\n");
         previewReportThree.setText(previewFormat.toString());
 
-
     }
-
 }

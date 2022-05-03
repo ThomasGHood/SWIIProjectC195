@@ -19,6 +19,8 @@ import java.util.ResourceBundle;
 /**
  * The EditCustomerScreenController class.
  * This class is used to update existing Customer and saves changes to the database.
+ *
+ * @author Thomas Hood
  */
 public class EditCustomerScreenController implements Initializable {
 

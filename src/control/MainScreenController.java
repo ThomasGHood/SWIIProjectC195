@@ -22,6 +22,8 @@ import java.util.ResourceBundle;
 /**
  * The MainScreenController class.
  * This class is the user's "dashboard" where reports can be viewed.
+ *
+ * @author Thomas Hood
  */
 public class MainScreenController implements Initializable {
 

@@ -3,6 +3,8 @@ package model;
 /**
  * The Country class.
  * This class models a country.
+ *
+ * @author Thomas Hood
  */
 public class Country {
     private int countryId;

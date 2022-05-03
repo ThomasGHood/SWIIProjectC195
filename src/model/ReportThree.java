@@ -4,6 +4,8 @@ package model;
  * The ReportThree class.
  * This class models a required report.
  * This report returns the number of customers per contact.
+ *
+ * @author Thomas Hood
  */
 public class ReportThree {
 

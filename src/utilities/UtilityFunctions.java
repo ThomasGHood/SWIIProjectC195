@@ -16,6 +16,8 @@ import java.time.*;
 /**
  * The UtilityFunctions class.
  * This class contains additional utility methods.
+ * 
+ * @author Thomas Hood
  */
 public class UtilityFunctions {
 

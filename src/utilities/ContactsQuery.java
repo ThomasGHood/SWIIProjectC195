@@ -8,6 +8,8 @@ import java.sql.SQLException;
 
 /**
  * The ContactsQuery class.
+ *
+ * @author Thomas Hood
  */
 public class ContactsQuery {
 

@@ -25,6 +25,8 @@ import java.util.Scanner;
 /**
  * The EditAppointmentScreenController class.
  * this class updates existing Appointment objects in the database.
+ *
+ * @author Thomas Hood
  */
 public class EditAppointmentScreenController implements Initializable {
 
@@ -255,6 +257,8 @@ public class EditAppointmentScreenController implements Initializable {
         appointmentDescriptionText.setText(selectedAppointment.getDescription());
         appointmentLocationText.setText(selectedAppointment.getLocation());
         appointmentTypeText.setText(selectedAppointment.getType());
+
+        //ListManager.getALLCustomerAppointments().stream().filter(c -> c.equals(selectedAppointment)).forEach(System.out::println);
 
     }
 }

@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 
 /**
  * The AppointmentQuery class.
+ *
+ * @author Thomas Hood
  */
 public abstract class AppointmentQuery {
 

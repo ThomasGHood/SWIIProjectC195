@@ -23,6 +23,8 @@ import java.util.ResourceBundle;
 /**
  * The AddAppointmentScreenController class.
  * This class adds new Appointment objects to the database.
+ *
+ * @author Thomas Hood
  */
 public class AddAppointmentScreenController implements Initializable {
 

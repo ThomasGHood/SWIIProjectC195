@@ -4,6 +4,8 @@ package model;
  * The ReportOne Class.
  * This class models a required report.
  * This report returns a count of customers per appointment type.
+ *
+ * @author Thomas Hood
  */
 public class ReportOne {
     private String appointmentType;

@@ -9,6 +9,8 @@ import model.*;
 /**
  * The ListManager class.
  * This class is a utility class used to get all objects used to populate the GUI objects.
+ *
+ * @author Thomas Hood
  */
 public class ListManager {
     private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();

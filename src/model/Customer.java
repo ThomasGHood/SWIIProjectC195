@@ -4,6 +4,8 @@ package model;
 /**
  * The Customer class.
  * This class models a Customer.
+ *
+ * @author Thomas Hood
  */
 public class Customer {
     private int customerID;

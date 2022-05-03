@@ -3,6 +3,8 @@ package model;
 /**
  * The Contact class.
  * This class models a Contact.
+ *
+ * @author Thomas Hood
  */
 public class Contact {
     private int contactId;

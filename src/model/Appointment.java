@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 /**
  * The Appointment class.
+ *
+ * @author Thomas Hood
  */
 public class Appointment {
 

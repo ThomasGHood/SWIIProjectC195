@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import utilities.*;
+
 import java.sql.SQLException;
 import java.time.ZoneId;
 import java.util.Locale;
@@ -17,13 +18,21 @@ import java.util.Locale;
  * 2022 May 01
  *
  * Main Class is the entry point to the application.
+ *
+ * @author Thomas hood
  */
 public class Main extends Application {
 
 
+    /**
+     * Start initializes the LoginScreen.
+     *
+     * @param stage the stage
+     * @throws Exception the exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/LoginScreen.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("src/view/LoginScreen.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("Login");
         stage.setScene(scene);

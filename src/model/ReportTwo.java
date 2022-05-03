@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
  * The ReportTwo class.
  * This class models a required report.
  * This report returns a schedule of appointments for a specified Contact.
+ *
+ * @author Thomas Hood
  */
 public class ReportTwo {
     private int appointmentID;
