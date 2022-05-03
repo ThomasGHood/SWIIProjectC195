@@ -204,34 +204,37 @@ public class EditAppointmentScreenController implements Initializable {
         }
     }
 
+    /**
+     * Lambda Expression:
+     *     -used to assign selected object to combobox.
+     *     -improved readability and performance over using a for loop.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         customerIdCombobox.setItems(ListManager.getAllCustomers());
-        for (Customer customers : ListManager.getAllCustomers()) {
-            if (customers.getCustomerID() == selectedAppointment.getCustomerID()) {
-                customerIdCombobox.setValue(customers);
+        //Lambda expression to set customerIdCombobox
+        ListManager.getAllCustomers().forEach(customer -> {
+            if (selectedAppointment.getCustomerID() == customer.getCustomerID()){
+                customerIdCombobox.setValue(customer);
             }
-        }
+        });
 
         userIdCombobox.setItems(ListManager.getAllUsers());
-        for (User users : ListManager.getAllUsers()){
-            if (users.getUserID() == selectedAppointment.getUserID()){
-                userIdCombobox.setValue(users);
+        //Lambda expression to set userIdCombobox
+        ListManager.getAllUsers().forEach(user -> {
+            if (selectedAppointment.getUserID() == user.getUserID()){
+                userIdCombobox.setValue(user);
             }
-        }
+        });
 
         contactIdCombobox.setItems(ListManager.getAllContacts());
-        for (Contact contact : ListManager.getAllContacts()) {
-            if (contact.getContactId() == selectedAppointment.getContactID()) {
+        //Lambda expression to set contactIdCombobox
+        ListManager.getAllContacts().forEach(contact -> {
+            if(selectedAppointment.getContactID() == contact.getContactId()){
                 contactIdCombobox.setValue(contact);
-                System.out.println(selectedAppointment.getContactID());
-                System.out.println(contact.getContactId());
-                System.out.println(contactIdCombobox.getSelectionModel().getSelectedItem());
-
             }
-        }
-
+        });
 
         startEndDatePicker.setValue(selectedAppointment.getStartTime().toLocalDate());
 
@@ -257,8 +260,6 @@ public class EditAppointmentScreenController implements Initializable {
         appointmentDescriptionText.setText(selectedAppointment.getDescription());
         appointmentLocationText.setText(selectedAppointment.getLocation());
         appointmentTypeText.setText(selectedAppointment.getType());
-
-        //ListManager.getALLCustomerAppointments().stream().filter(c -> c.equals(selectedAppointment)).forEach(System.out::println);
 
     }
 }
