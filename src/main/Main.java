@@ -19,7 +19,7 @@ import java.util.Locale;
  *
  * Main Class is the entry point to the application.
  *
- * Javadocs folder: "Javadocs/"
+ * Javadocs index.html: "Javadocs/index.html"
  *
  * @author Thomas hood
  */
