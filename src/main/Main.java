@@ -19,6 +19,8 @@ import java.util.Locale;
  *
  * Main Class is the entry point to the application.
  *
+ * Javadocs folder: "Javadocs/"
+ *
  * @author Thomas hood
  */
 public class Main extends Application {
