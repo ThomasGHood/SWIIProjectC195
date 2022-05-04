@@ -49,10 +49,10 @@ Appointments Dashboard.
 
 <b>Customer Appointment Manager:</b> Where customers and appointments are created and edited.
 <br>Under Customers:
-<br>-Add opens a menu to add a customer.
-<br>-Edit opens a menu to edit an existing customer.
-<br>-Remove deletes the selected customer and all associated appointments.
+<br>-Add- opens a menu to add a customer.
+<br>-Edit- opens a menu to edit an existing customer.
+<br>-Remove- deletes the selected customer and all associated appointments.
 <br>Under Appointments:
-<br>-Add opens a menu to add an appointment.
-<br>-Edit opens a menu to edit an existing appointment.
-<br>-Remove deletes the selected appointment.
+<br>-Add- opens a menu to add an appointment.
+<br>-Edit- opens a menu to edit an existing appointment.
+<br>-Remove- deletes the selected appointment.
