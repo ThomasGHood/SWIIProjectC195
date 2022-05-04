@@ -9,10 +9,10 @@ is handled by the application using ObservableLists to contain the objects in a
 volatile state; the application saves the volatile states to persistent memory in a 
 SQL database.
 
-###Author: Thomas Hood
-####Contact: thood30@wgu.edu
-####Version: 1.0
-####Date: 2022 May 03
+<br><b>Author:</b> Thomas Hood
+<br><b>Contact:</b> thood30@wgu.edu
+<br><b>Version:</b> 1.0
+<br><b>Date:</b> 2022 May 03
 
 # IDE & SDK Environment
 IntelliJ IDEA 2021.2.1 (Community Edition)
@@ -20,16 +20,16 @@ IntelliJ IDEA 2021.2.1 (Community Edition)
 SDK: Java JDK 11.0.9.12 -->
 JavaFX SDK 11.0.2
 
-##MySQL Connector Driver
+## MySQL Connector Driver
 mysql-connector-java-8.0.282
 
-#Supported Reports
+# Supported Reports
 ReportOne: generates a report that gives a count of total customer appointments, 
 filtered by type and month.
 <br>ReportTwo: generates a report that returns a schedule for a specified contact.
 <br>ReportThree: returns a count of customers per contact. 
 
-#Application Operation
+# Application Operation
 <b>LoginScreen:</b> Displayed first, where the user is required to enter username and 
 password, then login to the application, or cancel to exit. Note: successful and
 unsuccessful login attempts are logged in the login_activity.txt file.
